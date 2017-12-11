@@ -4,7 +4,7 @@ from django.db import models
 
 
 class image(models.Model):
-	imageName = models.FileField()
+	imageName = models.FileField(max_length=20)
 	fileType = models.CharField(max_length=4)
 
 	def __str__(self):
