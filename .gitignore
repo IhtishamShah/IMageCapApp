@@ -1,1 +1,4 @@
 *.pyc
+main/im2txt/model/train/model.ckpt-2000000.data-00000-of-00001
+main/im2txt/model/train/model.ckpt-2000000.index
+main/im2txt/model/train/model.ckpt-2000000.meta
