@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.views.decorators.csrf import csrf_exempt
+
 import requests
 import os
 import math
@@ -30,6 +32,7 @@ tf.flags.DEFINE_string("checkpoint_path", os.path.dirname(os.path.abspath(__file
 tf.flags.DEFINE_string("vocab_file", os.path.dirname(os.path.abspath(__file__)) + "\\im2txt\\word_counts.txt", "Text file containing the vocabulary.")
 tf.logging.set_verbosity(tf.logging.INFO)
 
+@csrf_exempt
 def index(request):
 	if request.method == 'POST' and request.FILES['myfile']:
 		myfile = request.FILES['myfile']
