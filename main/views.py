@@ -11,6 +11,7 @@ import requests
 import os
 import math
 import sys
+import json
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+'\\im2txt\\')
 
@@ -83,7 +84,11 @@ def index(request):
 
 		# print(r.json()['output'])
 		
-		return render(request, 'main/index.html', {
-		    'uploaded_file_url': uploaded_file_url
-		    })
-	return render(request, 'main/index.html')
+		data = {}
+		data['caption'] = sentence
+		json_data = json.dumps(data)
+		return HttpResponse(json_data)
+	# 	return render(request, 'main/index.html', {
+	# 	    'uploaded_file_url': uploaded_file_url
+	# 	    })
+	# return render(request, 'main/index.html')
