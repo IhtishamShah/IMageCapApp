@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, ActivityIndicator, } from 'react-native';
 import { Camera, Permissions } from 'expo';
 import { Button } from 'react-native-elements';
 import PopupDialog, {ScaleAnimation,  DialogTitle} from 'react-native-popup-dialog';
@@ -15,7 +15,7 @@ export default class CameraExample extends React.Component {
     ratio: '16:9',
     ratios: [],
     url: '',
-    loadingAnimation: false
+    loadingAnimation: true
   };
 
   async componentWillMount() {
@@ -39,7 +39,7 @@ export default class CameraExample extends React.Component {
   if (this.camera) {
     let photo = await this.camera.takePictureAsync(); 
     console.log(photo)
-    this.setState({url: photo})
+    this.setState({url: photo, loadingAnimation: false})
     // setInterval(() => {
     //   this.setState({
     //     loadingAnimation: !this.state.loadingAnimation
@@ -71,6 +71,7 @@ export default class CameraExample extends React.Component {
               <View style={{ alignSelf: 'flex-end'}}>
               <Button 
                  onPress={ () => {
+                  this.setState({loadingAnimation: true})
                   this.snap();
                   this.popupDialog.show();
 
@@ -90,7 +91,11 @@ export default class CameraExample extends React.Component {
 
               >
                 <View>
-                  <Text>{this.state.url.uri}</Text>
+                { this.state.loadingAnimation
+                  ? <ActivityIndicator size="large" color="#0000ff" />
+                  : <Text>{this.state.url.uri}</Text>
+                  
+                }
                 </View>
               </PopupDialog>
             </View>
