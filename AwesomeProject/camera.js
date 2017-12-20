@@ -15,7 +15,8 @@ export default class CameraExample extends React.Component {
     ratio: '16:9',
     ratios: [],
     url: '',
-    loadingAnimation: true
+    loadingAnimation: true,
+    caption: ''
   };
 
   async componentWillMount() {
@@ -38,13 +39,33 @@ export default class CameraExample extends React.Component {
  snap = async () => {
   if (this.camera) {
     let photo = await this.camera.takePictureAsync(); 
-    console.log(photo)
-    this.setState({url: photo, loadingAnimation: false})
+    console.log(photo.uri)
+    let body = new FormData();
+
+    body.append('photo', {uri: photo.uri, name: 'boi', type:'image/jpg'});
+    body.append('Content-Type','image/jpg');
+
+    fetch("http:\\127.0.0.1:8000\main",
+      {
+        method: 'POST', 
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body:body
+      }
+    )
+    .then((res) => checkStatus(res))
+    .then((res) => res.json())
+    .then((res) => console.log(res))
+
+    is.setState({url: photo.uri, loadingAnimation: false})
     // setInterval(() => {
     //   this.setState({
     //     loadingAnimation: !this.state.loadingAnimation
     //   });
     // }, 5000);
+
+
   }
   };
 
