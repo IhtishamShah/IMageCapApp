@@ -34,8 +34,11 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 @csrf_exempt
 def index(request):
-	if request.method == 'POST' and request.FILES['myfile']:
-		myfile = request.FILES['myfile']
+	print(request.FILES)
+	print(request.FILES['photo']) 
+	if request.method == 'POST' and request.FILES['photo']:
+		myfile = request.FILES['photo']
+		print(myfile)
 		fs = FileSystemStorage()
 		filename = fs.save(myfile.name, myfile)
 		uploaded_file_url = fs.url(filename)

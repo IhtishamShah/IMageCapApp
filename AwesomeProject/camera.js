@@ -42,10 +42,10 @@ export default class CameraExample extends React.Component {
     console.log(photo.uri)
     let body = new FormData();
 
-    body.append('photo', {uri: photo.uri, name: 'boi', type:'image/jpg'});
+    body.append('photo', {uri: photo.uri, name: photo.uri, type:'image/jpg'});
     body.append('Content-Type','image/jpg');
 
-    fetch("http:\\127.0.0.1:8000\main",
+    fetch("http://192.168.100.61:8000/main/",
       {
         method: 'POST', 
         headers: {
@@ -54,11 +54,13 @@ export default class CameraExample extends React.Component {
         body:body
       }
     )
-    .then((res) => checkStatus(res))
+   /// .then((res) => checkStatus(res))
     .then((res) => res.json())
     .then((res) => console.log(res))
+    .catch((e) => console.log(e))
+    .done()
 
-    is.setState({url: photo.uri, loadingAnimation: false})
+    this.setState({url: photo.uri, loadingAnimation: false})
     // setInterval(() => {
     //   this.setState({
     //     loadingAnimation: !this.state.loadingAnimation
