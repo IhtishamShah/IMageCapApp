@@ -56,11 +56,14 @@ export default class CameraExample extends React.Component {
     )
    /// .then((res) => checkStatus(res))
     .then((res) => res.json())
-    .then((res) => console.log(res))
+    .then((res) => {
+                      console.log(res)
+                      this.setState({caption: res, loadingAnimation: false})
+                  })
     .catch((e) => console.log(e))
     .done()
 
-    this.setState({url: photo.uri, loadingAnimation: false})
+    
     // setInterval(() => {
     //   this.setState({
     //     loadingAnimation: !this.state.loadingAnimation
@@ -116,7 +119,7 @@ export default class CameraExample extends React.Component {
                 <View>
                 { this.state.loadingAnimation
                   ? <ActivityIndicator size="large" color="#0000ff" />
-                  : <Text>{this.state.url.uri}</Text>
+                  : <Text>{this.state.caption}</Text>
                   
                 }
                 </View>
